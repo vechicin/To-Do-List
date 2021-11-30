@@ -1,22 +1,45 @@
-import _ from 'lodash';
+// IMPORTS
+import _, { forEach } from 'lodash';
 import printMe from './print.js';
 import './style.css';
 
-function component() {
-  const element = document.createElement('div');
-  const btn = document.createElement('button');
+//ELEMENTS
+const list = document.querySelector('.list');
+const button = document.createElement('button');
+button.innerHTML = `Clear all completed`;
 
-  // Lodash, now imported by this script
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+// ARRAY OF OBJECTS
+let toDoTasks = [
+  {
+  description: 'wash the dishes',
+  completed: Boolean,
+  index: 0
+},
+{
+  description: 'complete To Do List project',
+  completed: Boolean,
+  index: 1
+},
+{
+  description: 'fix car',
+  completed: Boolean,
+  index: 2
+},
+]
 
-  btn.innerHTML = 'Click me and check the console!';
-  btn.onclick = printMe;
-
-  element.appendChild(btn);
-
-  element.classList.add('hello');
-
-  return element;
+// FUNCTIONS
+let populateList = function (array) {
+  let result = [];
+  array.forEach(element => {
+    let tagText = `<input type="checkbox"><label>${element.description}</label>`;
+    result.push(tagText);
+  });
+  result.forEach(element => {
+    let li = document.createElement('li');
+    li.innerHTML = element;
+    list.appendChild(li);
+  });
 }
 
-document.body.appendChild(component());
+populateList(toDoTasks);
+list.appendChild(button);
