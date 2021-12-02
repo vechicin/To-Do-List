@@ -1,80 +1,71 @@
 // IMPORTS
 import './style.css';
-import updateToTrue from './statusUpdate.js';
+import { updateToTrue, updateToFalse} from './statusUpdate.js';
 // ELEMENTS
-const list = document.querySelector('.list');
-const button = document.createElement('button');
-button.innerHTML = 'Clear all completed';
-const checkBoxLabel = document.getElementsByTagName('label');
+const taskContainer = document.querySelector('.list');
+const taskForm = document.getElementById('task-form');
+const taskInput = document.getElementById('task-input');
+const taskTemplate = document.getElementById('template');
 
-// ARRAY OF OBJECTS
-let toDoTasks = [
-  {
-    description: 'wash the dishes',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'complete To Do List project',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'fix car',
-    completed: false,
-    index: 2,
-  },
-];
+let tasks = JSON.parse(localStorage.getItem('Tasks')) || [];
 
 // FUNCTIONS
-const populateList = function (array) {
-  const result = [];
-  array.forEach((element) => {
-    const tagText = `<input class="${element.index}" id="checkbox" type="checkbox"><label for="checkbox">${element.description}</label>`;
-    result.push(tagText);
-  });
-  result.forEach((element) => {
-    const li = document.createElement('li');
-    li.innerHTML = element;
-    list.appendChild(li);
-  });
-};
-
-function checkLocalStorage() {
-  if (!localStorage.getItem('ToDoList')) {
-    toDoTasks = [];
-    localStorage.setItem('ToDoList', JSON.stringify(toDoTasks));
-  } else {
-    toDoTasks = JSON.parse(localStorage.getItem('ToDoList'));
-  }
+function createTask(name) {
+  return {id : 1, name : name, completed : false};
 }
 
-populateList(toDoTasks);
-list.appendChild(button);
+function saveToLocalStorage() {
+  localStorage.setItem('Tasks', JSON.stringify(tasks));
+}
+
+function strikeThrough(element) {
+  element.style.textDecoration = 'line-through';
+}
+
+function checkedBox(element) {
+  element.checked = true;
+}
+
+function renderTask() {
+  taskContainer.innerHTML = '';
+  tasks.forEach(task => {
+    const taskElement = document.importNode(taskTemplate.content, true);
+    const checkbox = taskElement.querySelector('.checkbox');
+    const taskLabel = taskElement.querySelector('label');
+    const li = taskElement.querySelector('.task');
+    checkbox.id = task.id;
+    taskLabel.htmlFor = task.id;
+    taskLabel.append(task.name);
+    taskContainer.appendChild(taskElement);
+    console.log(checkbox.checked);
+    if (task.completed === true) {
+      strikeThrough(li);
+      checkedBox(checkbox);
+    }
+    checkbox.addEventListener('change', (e) => {
+      if (e.target.checked === true) {
+        updateToTrue(task);
+        strikeThrough(e.target.parentNode);
+        saveToLocalStorage();
+      } else {
+        updateToFalse(task);
+        e.target.parentNode.style.textDecoration = '';
+        saveToLocalStorage();
+      }
+    })
+  })
+}
 
 // EVENT LISTENERS
-const checkBox = document.querySelectorAll('#checkbox');
-for (let i = 0; i < checkBox.length; i++) {
-  checkLocalStorage();
-  checkBox[i].addEventListener('click', (e) => {
-    if (e.target.checked === true) {
-      for (let i = 0; i < toDoTasks.length; i++) {
-        if (e.target.className === toDoTasks[i].index.toString()) {
-          updateToTrue(toDoTasks[i]);
-          e.target.parentNode.style.textDecoration = 'line-through';
-          e.target.value = true
-          localStorage.setItem('ToDoList', JSON.stringify(toDoTasks));
-        }
-        if (toDoTasks[i].completed === true) {
-        }
-      }
-    } else {
-      for (let i = 0; i < toDoTasks.length; i++) {
-        toDoTasks[i].completed = false;
-        localStorage.setItem('ToDoList', JSON.stringify(toDoTasks));
-      }
-      e.target.parentNode.style.textDecoration = '';
-    }
-  }) 
-}
+taskForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const taskName = taskInput.value;
+  if (taskName === '') return;
+  const task = createTask(taskName);
+  taskInput.value = null;
+  tasks.push(task);
+  saveToLocalStorage();
+  renderTask();
+})
 
+renderTask();
