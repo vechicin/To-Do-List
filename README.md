@@ -14,7 +14,7 @@
 👤 **Santiago Velosa**
 
 - GitHub: [@vechicin](https://github.com/vechicin)
-- Twitter: [@vechicin](https://twitter.com/vechicin)
+- Twitter: [@vechicin](https://twitter.com/therealvelosa)
 - LinkedIn: [Santiago Velosa Arias](https://www.linkedin.com/in/santiago-velosa-arias-5b7543112/)
 
 ## 🤝 Contributing
