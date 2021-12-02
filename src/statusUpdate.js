@@ -6,4 +6,4 @@ function updateToFalse(object) {
   object.completed = false;
 }
 
-export { updateToTrue, updateToFalse};
+export { updateToTrue, updateToFalse };

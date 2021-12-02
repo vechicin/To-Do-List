@@ -1,17 +1,17 @@
 // IMPORTS
 import './style.css';
-import { updateToTrue, updateToFalse} from './statusUpdate.js';
+import { updateToTrue, updateToFalse } from './statusUpdate.js';
 // ELEMENTS
 const taskContainer = document.querySelector('.list');
 const taskForm = document.getElementById('task-form');
 const taskInput = document.getElementById('task-input');
 const taskTemplate = document.getElementById('template');
 
-let tasks = JSON.parse(localStorage.getItem('Tasks')) || [];
+const tasks = JSON.parse(localStorage.getItem('Tasks')) || [];
 
 // FUNCTIONS
 function createTask(name) {
-  return {id : 1, name : name, completed : false};
+  return { id: 1, name, completed: false };
 }
 
 function saveToLocalStorage() {
@@ -28,7 +28,7 @@ function checkedBox(element) {
 
 function renderTask() {
   taskContainer.innerHTML = '';
-  tasks.forEach(task => {
+  tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
     const checkbox = taskElement.querySelector('.checkbox');
     const taskLabel = taskElement.querySelector('label');
@@ -37,7 +37,6 @@ function renderTask() {
     taskLabel.htmlFor = task.id;
     taskLabel.append(task.name);
     taskContainer.appendChild(taskElement);
-    console.log(checkbox.checked);
     if (task.completed === true) {
       strikeThrough(li);
       checkedBox(checkbox);
@@ -52,8 +51,8 @@ function renderTask() {
         e.target.parentNode.style.textDecoration = '';
         saveToLocalStorage();
       }
-    })
-  })
+    });
+  });
 }
 
 // EVENT LISTENERS
@@ -66,6 +65,6 @@ taskForm.addEventListener('submit', (e) => {
   tasks.push(task);
   saveToLocalStorage();
   renderTask();
-})
+});
 
 renderTask();
