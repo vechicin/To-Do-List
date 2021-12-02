@@ -1,43 +1,70 @@
 // IMPORTS
 import './style.css';
-
+import { updateToTrue, updateToFalse } from './statusUpdate.js';
 // ELEMENTS
-const list = document.querySelector('.list');
-const button = document.createElement('button');
-button.innerHTML = 'Clear all completed';
+const taskContainer = document.querySelector('.list');
+const taskForm = document.getElementById('task-form');
+const taskInput = document.getElementById('task-input');
+const taskTemplate = document.getElementById('template');
 
-// ARRAY OF OBJECTS
-const toDoTasks = [
-  {
-    description: 'wash the dishes',
-    completed: Boolean,
-    index: 0,
-  },
-  {
-    description: 'complete To Do List project',
-    completed: Boolean,
-    index: 1,
-  },
-  {
-    description: 'fix car',
-    completed: Boolean,
-    index: 2,
-  },
-];
+const tasks = JSON.parse(localStorage.getItem('Tasks')) || [];
 
 // FUNCTIONS
-const populateList = function (array) {
-  const result = [];
-  array.forEach((element) => {
-    const tagText = `<input type="checkbox"><label>${element.description}</label>`;
-    result.push(tagText);
-  });
-  result.forEach((element) => {
-    const li = document.createElement('li');
-    li.innerHTML = element;
-    list.appendChild(li);
-  });
-};
+function createTask(name) {
+  return { id: 1, name, completed: false };
+}
 
-populateList(toDoTasks);
-list.appendChild(button);
+function saveToLocalStorage() {
+  localStorage.setItem('Tasks', JSON.stringify(tasks));
+}
+
+function strikeThrough(element) {
+  element.style.textDecoration = 'line-through';
+}
+
+function checkedBox(element) {
+  element.checked = true;
+}
+
+function renderTask() {
+  taskContainer.innerHTML = '';
+  tasks.forEach((task) => {
+    const taskElement = document.importNode(taskTemplate.content, true);
+    const checkbox = taskElement.querySelector('.checkbox');
+    const taskLabel = taskElement.querySelector('label');
+    const li = taskElement.querySelector('.task');
+    checkbox.id = task.id;
+    taskLabel.htmlFor = task.id;
+    taskLabel.append(task.name);
+    taskContainer.appendChild(taskElement);
+    if (task.completed === true) {
+      strikeThrough(li);
+      checkedBox(checkbox);
+    }
+    checkbox.addEventListener('change', (e) => {
+      if (e.target.checked === true) {
+        updateToTrue(task);
+        strikeThrough(e.target.parentNode);
+        saveToLocalStorage();
+      } else {
+        updateToFalse(task);
+        e.target.parentNode.style.textDecoration = '';
+        saveToLocalStorage();
+      }
+    });
+  });
+}
+
+// EVENT LISTENERS
+taskForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const taskName = taskInput.value;
+  if (taskName === '') return;
+  const task = createTask(taskName);
+  taskInput.value = null;
+  tasks.push(task);
+  saveToLocalStorage();
+  renderTask();
+});
+
+renderTask();

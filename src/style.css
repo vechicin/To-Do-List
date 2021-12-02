@@ -1,32 +1,20 @@
 body {
   display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 0;
   justify-content: center;
+  align-items: center;
 }
 
 .list {
+  flex-direction: column;
   padding: 1%;
   list-style-type: none;
   border: 1px solid #d3d3d3;
   box-shadow: 3px 3px 3px #d3d3d3;
 }
 
-li {
-  border-bottom: 1px solid #d3d3d3;
-  margin: 10%;
-}
-
-button {
-  border: none;
-  width: 100%;
-  height: 12%;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-button:active {
-  border: 1px solid #000;
+#task-form {
+  display: flex;
 }

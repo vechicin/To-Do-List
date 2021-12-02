@@ -6,8 +6,21 @@
     <title>To Do List</title>
 </head>
 <body>
+  <h1>Today's To Do</h1>
+
   <ul class="list">
-    <li>Today's To Do</li>
   </ul>
+
+  <form id="task-form" action="#">
+    <input type="text" id="task-input" placeholder="Enter task here">
+    <button type="submit" class="submit-task">Enter</button>
+  </form>
+
+  <template id="template">
+    <li class="task">
+      <input class="checkbox" type="checkbox">
+      <label></label>
+    </li>
+  </template>
 </body>
 </html>
