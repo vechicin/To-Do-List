@@ -47,7 +47,7 @@ Give a ⭐️ if you like this project!
 ## Acknowledgments
 
   - Kero for always being willing to collaborate
-  - Elias Castañeda for his help
+  - Elias Castañeda for being of tremendous help
 
 ## 📝 License
 
