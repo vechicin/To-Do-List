@@ -5,6 +5,8 @@ body {
   padding: 0;
   justify-content: center;
   align-items: center;
+  background-color: #0b910b;
+  font-family: 'Lato', sans-serif;
 }
 
 .list {
@@ -13,8 +15,35 @@ body {
   list-style-type: none;
   border: 1px solid #d3d3d3;
   box-shadow: 3px 3px 3px #d3d3d3;
+  width: 50%;
+  text-align: center;
+  font-size: 20px;
+}
+
+.edit {
+  margin-right: 1%;
+}
+
+.button-container {
+  flex-direction: row;
+  margin-top: 5%;
+}
+
+button {
+  border: none;
+  background-color: #060646;
+  color: #fff;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+input [type=text] {
+  border: none;
 }
 
 #task-form {
   display: flex;
+  flex-direction: column;
 }

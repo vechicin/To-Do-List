@@ -6,6 +6,7 @@ module.exports = {
   entry: {
     index: './src/index.js',
     status: './src/statusUpdate.js',
+    script: './src/script.js',
   },
   devtool: 'inline-source-map',
   devServer: {
