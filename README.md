@@ -34,6 +34,9 @@ $ git clone git@github.com:vechicin/To-Do-List.git
 $ npm i
 ~~~
 
+## 🔎 Live Demo Link
+If you want to take a look at the project's online version, [click here](https://vechicin.github.io/To-Do-List/)
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
