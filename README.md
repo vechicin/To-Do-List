@@ -35,7 +35,7 @@ $ npm i
 ~~~
 
 ## 🔎 Live Demo Link
-If you want to take a look at the project's online version, [click here](https://vechicin.github.io/To-Do-List/)
+If you want to take a look at the project's online version, [click here](https://vechicin.github.io/To-Do-List/dist)
 
 ## 🤝 Contributing
 
